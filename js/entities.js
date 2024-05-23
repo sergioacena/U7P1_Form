@@ -566,6 +566,13 @@ const RestaurantsManager = (function () {
             throw new NotRegisteredElementException(); //Si no existe la categoría, salta excepción
           }
 
+          console.log(
+            "Desasignando categoría en la posición:",
+            positionC,
+            "del plato en posición:",
+            positionD
+          );
+
           //Se asigna la categoría al plato según su posición
           this.#dishes[positionD].categories.splice(positionC, 1);
         }
@@ -742,6 +749,25 @@ const RestaurantsManager = (function () {
         }
 
         return dishesInCategory();
+      }
+
+      //Coge las categorías asociadas a un plato
+      getCategoriesOfDish(dishName) {
+        //Se busca el índice para el plato en la lista
+        const dishIndex = this.#dishes.findIndex(
+          (dishObj) => dishObj.dish.name === dishName
+        );
+
+        //Si el plato no existe salta excepción
+        if (dishIndex === -1) {
+          throw new NotRegisteredElementException();
+        }
+
+        //Se obtiene para que categorías está dicho plato
+        const categoriesOfDish = this.#dishes[dishIndex].categories.map(
+          (category) => category
+        );
+        return categoriesOfDish; //Devuelve dichas categorías
       }
 
       //Coger los platos con un alérgeno específico

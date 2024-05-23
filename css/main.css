@@ -537,6 +537,36 @@ footer p {
     width:100%
   }
 
+  /* elim categoria - t7*/
+
+#remove-category .cat-list-image img {
+    width: 200px; 
+    height: auto;
+  }
+
+  #remove-category .col-lg-3,
+  #remove-category .col-md-6 {
+    margin-bottom: 15px;
+  }
+  
+  #remove-category .cat-list-text h3 {
+    font-size: 1.5em;
+    color: orange !important;
+    text-decoration: none !important;
+  }
+  
+  #remove-category .cat-list-text div {
+    font-size: 1em;
+    color: black !important;
+    text-decoration: none !important;
+  }
+
+  #remove-category .btn {
+    margin-top: 10px;
+  }
+  
+  
+
 /* restaurant info */
 .restaurant-container {
     background-color: orange;
