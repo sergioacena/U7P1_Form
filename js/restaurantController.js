@@ -216,7 +216,7 @@ class RestaurantController {
   onLoad = () => {
     this[LOAD_RESTAURANT_OBJECTS]();
     this.onAddCategory();
-    // this[VIEW].showRandomProduct(this[MODEL].getterDishes());
+    this[VIEW].showRandomProduct(this[MODEL].getterDishes());
     this.onAddAllergen();
     this.onAddMenu();
     this.onAddRestaurant();
@@ -240,9 +240,9 @@ class RestaurantController {
   onInit = () => {
     // Muestra las categorías y los platos aleatorios
     this[VIEW].showCategories(this[MODEL].getterCategories());
-    // this[VIEW].showRandomProduct(this[MODEL].getterDishes());
+    this[VIEW].showRandomProduct(this[MODEL].getterDishes());
     this[VIEW].bindProductsCategoryList(this.handleProductsCategoryList);
-    // this[VIEW].bindShowRandomProduct(this.handleShowProduct);
+    this[VIEW].bindShowRandomProduct(this.handleShowProduct);
   };
 
   handleInit = () => {
@@ -534,12 +534,25 @@ class RestaurantController {
       if (assignCat.length >= 1) {
         for (const cat of assignCat) {
           const catObj = this[MODEL].createCategory(cat);
+          //test
+          console.log(
+            "Asignando categoría:",
+            catObj.name,
+            "del plato:",
+            dishObj.name
+          );
           this[MODEL].assignCategoryToDish(dishObj, catObj);
+          //test
+          console.log(
+            "Categorías después de asignar:",
+            this[MODEL].getCategoriesOfDish(dishObj.name)
+          );
         }
       }
       if (deassignCat.length >= 1) {
         for (const cat of deassignCat) {
           const catObj = this[MODEL].createCategory(cat);
+          //test
           console.log(
             "Desasignando categoría:",
             catObj.name,
@@ -547,6 +560,7 @@ class RestaurantController {
             dishObj.name
           );
           this[MODEL].deassignCategoryToDish(dishObj, catObj);
+          //test
           console.log(
             "Categorías después de desasignar:",
             this[MODEL].getCategoriesOfDish(dishObj.name)

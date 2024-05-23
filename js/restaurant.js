@@ -14,9 +14,9 @@ const historyActions = {
   restaurantsList: (event) =>
     RestaurantApp.handleRestaurant(event.state.restaurant),
   showProduct: (event) => RestaurantApp.handleShowProduct(event.state.dish),
-  // showRandomProduct: (event) => {
-  //   RestaurantApp.handleShowProduct(event.state.dish);
-  // },
+  showRandomProduct: (event) => {
+    RestaurantApp.handleShowProduct(event.state.dish);
+  },
   newDish: () => RestaurantApp.handleNewDishForm(),
   removeDish: () => RestaurantApp.handleRemoveDishForm(),
   removeDishByCategory: (event) => {

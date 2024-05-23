@@ -12,7 +12,7 @@ class RestaurantView {
   constructor() {
     this.main = document.getElementsByTagName("main")[0];
     this.categories = document.getElementById("categories");
-    this.dishes = document.getElementById("dishes");
+    // this.dishes = document.getElementById("dishes");
     this.menu = document.querySelector(".navbar-nav");
     this.productWindows = []; //si se deja null, no se pueden rastrear las ventanas que haya abiertas
   }
@@ -169,59 +169,58 @@ class RestaurantView {
     }
   }
 
-  // showRandomProduct(dishes) {
-  //   //copiamos los datos del iterador en un nuevo array
-  //   const allDishes = [...dishes];
-  //   const randomDishes = [];
+  showRandomProduct(dishes) {
+    //copiamos los datos del iterador en un nuevo array
+    const allDishes = [...dishes];
+    const randomDishes = [];
 
-  //   //se cogen 3 platos que no tengan duplicados
-  //   while (randomDishes.length < 3 && allDishes.length > 0) {
-  //     const randomIndex = Math.floor(Math.random() * allDishes.length);
-  //     randomDishes.push(allDishes[randomIndex]);
-  //     //se elimina el plato que se ha elegido para evitar que vuelva a salir
-  //     allDishes.splice(randomIndex, 1);
-  //   }
+    //se cogen 3 platos que no tengan duplicados
+    while (randomDishes.length < 3 && allDishes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * allDishes.length);
+      randomDishes.push(allDishes[randomIndex]);
+      //se elimina el plato que se ha elegido para evitar que vuelva a salir
+      allDishes.splice(randomIndex, 1);
+    }
 
-  //   //Limpia cualquier plato existente en el contenedor this.dishes
-  //   this.dishes.replaceChildren();
-  //   //Si hay más de un hijo en this.dishes elimina el segundo hijo (para evitar duplicados)
-  //   if (this.dishes.children.length > 1) {
-  //     this.dishes.children[1].remove();
-  //   }
-  //   const container = document.createElement("div");
-  //   container.id = "random-list";
-  //   container.classList.add("container");
-  //   container.classList.add("my-3");
-  //   container.insertAdjacentHTML("beforeend", '<div class="row"> </div>');
+    //Limpia cualquier plato existente en el contenedor this.main
+    this.main.replaceChildren();
+    //Si hay más de un hijo en this.main elimina el segundo hijo (para evitar duplicados)
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
+    const container = document.createElement("div");
+    container.id = "random-list";
+    container.classList.add("container");
+    container.classList.add("my-3");
+    container.insertAdjacentHTML("beforeend", '<div class="row"> </div>');
 
-  //   for (const dish of randomDishes) {
-  //     const div = document.createElement("div");
-  //     div.classList.add("col-md-4");
-  //     div.insertAdjacentHTML(
-  //       "beforeend",
-  //       `<figure class="card card-product-grid card-lg"> <a data-dish="${dish.dish.name}" href="#single-product" class="img-wrap"><img class="${dish.dish.constructor.name}-style" src="${dish.dish.image}"></a>
-  //         <figcaption class="info-wrap">
-  //           <div class="row">
-  //             <div class="col-md-8"> <a data-dish="${dish.dish.name}" href="#single-product" class="title2">${dish.dish.name}</a> </div>
-  //             <div class="col-md-4">
-  //               <div class="rating text-right"> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> </div>
-  //             </div>
-  //           </div>
-  //         </figcaption>
-  //       </figure>`
-  //     );
-  //     container.children[0].append(div);
-  //   }
-  //   container.insertAdjacentHTML(
-  //     "afterbegin",
-  //     `<h1 class= "title">Platos aleatorios</h1><br>`
-  //   );
+    for (const dish of randomDishes) {
+      const div = document.createElement("div");
+      div.classList.add("col-md-4");
+      div.insertAdjacentHTML(
+        "beforeend",
+        `<figure class="card card-product-grid card-lg"> <a data-dish="${dish.dish.name}" href="#single-product" class="img-wrap"><img class="${dish.dish.constructor.name}-style" src="${dish.dish.image}"></a>
+          <figcaption class="info-wrap">
+            <div class="row">
+              <div class="col-md-8"> <a data-dish="${dish.dish.name}" href="#single-product" class="title2">${dish.dish.name}</a> </div>
+              <div class="col-md-4">
+                <div class="rating text-right"> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> </div>
+              </div>
+            </div>
+          </figcaption>
+        </figure>`
+      );
+      container.children[0].append(div);
+    }
+    container.insertAdjacentHTML(
+      "afterbegin",
+      `<h1 class= "title">Platos aleatorios</h1><br>`
+    );
 
-  //   this.dishes.append(container);
-  // }
+    this.main.append(container);
+  }
 
   listProducts(products, title) {
-    this.categories.replaceChildren();
+    // this.categories.replaceChildren();
     this.main.replaceChildren();
     if (this.categories.children.length > 1)
       this.categories.children[1].remove();
@@ -267,7 +266,8 @@ class RestaurantView {
       "afterbegin",
       `<h1 class= "title">${title}</h1><br>`
     );
-    this.categories.append(container);
+    // this.categories.append(container);
+    this.main.append(container);
   }
 
   bindProductsCategoryList(handler) {
@@ -387,7 +387,7 @@ class RestaurantView {
   showProduct(product, message) {
     this.main.replaceChildren();
     if (this.categories.children.length > 1)
-      this.categories.children[1].remove();
+      this.categories.children[0].remove();
     const container = document.createElement("div");
     container.classList.add("container");
     container.classList.add("mt-5");
@@ -561,39 +561,39 @@ class RestaurantView {
     }
   }
 
-  // bindShowRandomProduct(handler) {
-  //   const productList = document.getElementById("random-list");
-  //   const links = productList.querySelectorAll("a");
-  //   for (const link of links) {
-  //     link.addEventListener("click", (event) => {
-  //       const dish = event.currentTarget.dataset.dish;
-  //       this[EXCECUTE_HANDLER](
-  //         handler,
-  //         [dish],
-  //         "#single-product",
-  //         { action: "showRandomProduct", dish },
-  //         "#single-product",
-  //         event
-  //       );
-  //       handler(dish);
-  //     });
-  //   }
-  //   const images = productList.querySelectorAll("figcaption a");
-  //   for (const link of images) {
-  //     link.addEventListener("click", (event) => {
-  //       const dish = event.currentTarget.dataset.dish;
-  //       this[EXCECUTE_HANDLER](
-  //         handler,
-  //         [dish],
-  //         "#single-product",
-  //         { action: "showRandomProduct", dish },
-  //         "#single-product",
-  //         event
-  //       );
-  //       handler(dish);
-  //     });
-  //   }
-  // }
+  bindShowRandomProduct(handler) {
+    const productList = document.getElementById("random-list");
+    const links = productList.querySelectorAll("a");
+    for (const link of links) {
+      link.addEventListener("click", (event) => {
+        const dish = event.currentTarget.dataset.dish;
+        this[EXCECUTE_HANDLER](
+          handler,
+          [dish],
+          "#single-product",
+          { action: "showRandomProduct", dish },
+          "#single-product",
+          event
+        );
+        handler(dish);
+      });
+    }
+    const images = productList.querySelectorAll("figcaption a");
+    for (const link of images) {
+      link.addEventListener("click", (event) => {
+        const dish = event.currentTarget.dataset.dish;
+        this[EXCECUTE_HANDLER](
+          handler,
+          [dish],
+          "#single-product",
+          { action: "showRandomProduct", dish },
+          "#single-product",
+          event
+        );
+        handler(dish);
+      });
+    }
+  }
 
   //Actualización de breadcrumbs
   updateBreadcrumbs(label, href = "#") {
@@ -790,8 +790,9 @@ class RestaurantView {
   }
 
   showNewDishForm(categories, allergens) {
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.dishes.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -902,7 +903,7 @@ class RestaurantView {
 			</div>`
     );
     container.append(form);
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
   showNewDishModal(done, dish, error) {
@@ -938,8 +939,9 @@ class RestaurantView {
 
   //eliminación de platos
   showRemoveDishForm(categories) {
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.dishes.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -984,7 +986,7 @@ class RestaurantView {
       '<div id="product-list" class="container my-3"><div class="row"></div></div>'
     );
 
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
   showRemoveDishModal(done, product, error) {
@@ -1106,8 +1108,9 @@ class RestaurantView {
 
   showNewCategoryForm() {
     console.log();
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.categories.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -1156,7 +1159,7 @@ class RestaurantView {
   			</div>
   		</form>`
     );
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
   showNewCategoryModal(done, cat, error) {
@@ -1195,8 +1198,9 @@ class RestaurantView {
   }
 
   showRemoveCategoryForm(categories) {
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.dishes.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -1226,7 +1230,7 @@ class RestaurantView {
       );
     }
     container.append(row);
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
   showRemoveCategoryModal(done, cat, error) {
@@ -1293,8 +1297,9 @@ class RestaurantView {
   }
 
   showNewRestaurantForm() {
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.categories.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -1353,7 +1358,7 @@ class RestaurantView {
 			</div>
 		</form>`
     );
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
   showNewRestaurantModal(done, rest, error) {
@@ -1392,8 +1397,9 @@ class RestaurantView {
   }
 
   showModifyCategoriesForm(dishes) {
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.dishes.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -1437,39 +1443,100 @@ class RestaurantView {
     }
 
     container.append(form);
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
-  showModifyCategoriesSelects(categoriesDish, categoriesNotInDish) {
+  // showModifyCategoriesSelects(categoriesDish, categoriesNotInDish) {
+  //   const form = document.getElementsByName("fModCategories")[0];
+
+  //   //opcional
+  //   const existingDeassignCat = form.querySelector("#deassignCat");
+  //   if (existingDeassignCat)
+  //     existingDeassignCat.parentElement.parentElement.remove();
+
+  //   const existingAssignCat = form.querySelector("#assignCat");
+  //   if (existingAssignCat)
+  //     existingAssignCat.parentElement.parentElement.remove();
+
+  //   form.insertAdjacentHTML(
+  //     "beforeend",
+  //     `<div class="row d-flex justify-content-center">
+  //       <div class="col-md-6 mb-3">
+  //         <label class="form-label" for="deassignCat">Categorías a desasignar</label>
+  //         <div class="input-group">
+  //           <span class="input-group-text"><i class="bi bi-body-text"></i></span>
+  //           <select class="form-select" name="deassignCat" id="deassignCat">
+  //             <option value="" selected disabled>Selecciona una categoría</option>
+  //           </select>
+  //           <div class="invalid-feedback">Elija categorías a asignar o desasignar.</div>
+  //           <div class="valid-feedback">Correcto.</div>
+  //         </div>
+  //       </div>
+  //     </div>`
+  //   );
+
+  //   const deassignCat = form.querySelector("#deassignCat");
+  //   for (const cat of categoriesDish) {
+  //     deassignCat.insertAdjacentHTML(
+  //       "beforeend",
+  //       `<option value="${cat.name}">${cat.name}</option>`
+  //     );
+  //   }
+
+  //   form.insertAdjacentHTML(
+  //     "beforeend",
+  //     `<div class="row d-flex justify-content-center">
+  //       <div class="col-md-6 mb-3">
+  //         <label class="form-label" for="assignCat">Categorías a asignar</label>
+  //         <div class="input-group">
+  //           <span class="input-group-text"><i class="bi bi-body-text"></i></span>
+  //           <select class="form-select" name="assignCat" id="assignCat">
+  //             <option value="" selected disabled>Selecciona una categoría</option>
+  //           </select>
+  //           <div class="invalid-feedback">Elija categorías a asignar o desasignar.</div>
+  //           <div class="valid-feedback">Correcto.</div>
+  //         </div>
+  //       </div>
+  //     </div>`
+  //   );
+
+  //   const assignCat = form.querySelector("#assignCat");
+  //   for (const cat of categoriesNotInDish) {
+  //     assignCat.insertAdjacentHTML(
+  //       "beforeend",
+  //       `<option value="${cat.name}">${cat.name}</option>`
+  //     );
+  //   }
+
+  //   form.insertAdjacentHTML(
+  //     "beforeend",
+  //     `<div class="mb-12">
+  //       <button class="btn btn-primary" type="submit">Enviar</button>
+  //       <button class="btn btn-primary" type="reset">Cancelar</button>
+  //     </div>`
+  //   );
+  // }
+
+  showModifyCategoriesSelects(categoriesInDish, categoriesOutsideDish) {
     const form = document.getElementsByName("fModCategories")[0];
-
-    const existingDeassignCat = form.querySelector("#deassignCat");
-    if (existingDeassignCat)
-      existingDeassignCat.parentElement.parentElement.remove();
-
-    const existingAssignCat = form.querySelector("#assignCat");
-    if (existingAssignCat)
-      existingAssignCat.parentElement.parentElement.remove();
 
     form.insertAdjacentHTML(
       "beforeend",
       `<div class="row d-flex justify-content-center">
-        <div class="col-md-6 mb-3">
-          <label class="form-label" for="deassignCat">Categorías a desasignar</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-body-text"></i></span>
-            <select class="form-select" name="deassignCat" id="deassignCat">
-              <option value="" selected disabled>Selecciona una categoría</option>
-            </select>
-            <div class="invalid-feedback">Elija categorías a asignar o desasignar.</div>
-            <div class="valid-feedback">Correcto.</div>
-          </div>
-        </div>
-      </div>`
+      <div class="col-md-6 mb-3">
+  			<label class="form-label" for="deassignCat">Categorías a desasignar</label>
+  		  <div class="input-group">
+  				<span class="input-group-text"><i class="bi bi-body-text"></i></span>
+  				<select class="form-select" name="deassignCat" id="deassignCat" multiple>
+  				</select>
+  				<div class="invalid-feedback">Elija categorías a asignar o desasignar.</div>
+  				<div class="valid-feedback">Correcto.</div>
+  			</div>
+  		</div>
+    `
     );
-
     const deassignCat = form.querySelector("#deassignCat");
-    for (const cat of categoriesDish) {
+    for (const cat of categoriesInDish) {
       deassignCat.insertAdjacentHTML(
         "beforeend",
         `<option value="${cat.name}">${cat.name}</option>`
@@ -1479,22 +1546,20 @@ class RestaurantView {
     form.insertAdjacentHTML(
       "beforeend",
       `<div class="row d-flex justify-content-center">
-        <div class="col-md-6 mb-3">
-          <label class="form-label" for="assignCat">Categorías a asignar</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-body-text"></i></span>
-            <select class="form-select" name="assignCat" id="assignCat">
-              <option value="" selected disabled>Selecciona una categoría</option>
-            </select>
-            <div class="invalid-feedback">Elija categorías a asignar o desasignar.</div>
-            <div class="valid-feedback">Correcto.</div>
-          </div>
-        </div>
-      </div>`
+      <div class="col-md-6 mb-3">
+  			<label class="form-label" for="assignCat">Categorías a asignar</label>
+  		  <div class="input-group">
+  				<span class="input-group-text"><i class="bi bi-body-text"></i></span>
+  				<select class="form-select" name="assignCat" id="assignCat" multiple>
+  				</select>
+  				<div class="invalid-feedback">Elija categorías a asignar o desasignar.</div>
+  				<div class="valid-feedback">Correcto.</div>
+  			</div>
+  		</div>
+    `
     );
-
     const assignCat = form.querySelector("#assignCat");
-    for (const cat of categoriesNotInDish) {
+    for (const cat of categoriesOutsideDish) {
       assignCat.insertAdjacentHTML(
         "beforeend",
         `<option value="${cat.name}">${cat.name}</option>`
@@ -1503,10 +1568,11 @@ class RestaurantView {
 
     form.insertAdjacentHTML(
       "beforeend",
-      `<div class="mb-12">
-        <button class="btn btn-primary" type="submit">Enviar</button>
-        <button class="btn btn-primary" type="reset">Cancelar</button>
-      </div>`
+      `
+    <div class="mb-12">
+      <button class="btn btn-primary" type="submit">Enviar</button>
+      <button class="btn btn-primary" type="reset">Cancelar</button>
+    </div>`
     );
   }
 
@@ -1560,8 +1626,9 @@ class RestaurantView {
   }
 
   showAssignDishesForm(menus) {
-    this.dishes.replaceChildren();
-    if (this.dishes.children.length >= 1) this.dishes.children[0].remove();
+    this.main.replaceChildren();
+    if (this.categories.children.length > 1)
+      this.categories.children[1].remove();
 
     const container = document.createElement("div");
     container.classList.add("container");
@@ -1570,7 +1637,7 @@ class RestaurantView {
 
     container.insertAdjacentHTML(
       "afterbegin",
-      '<h1 class="display-5">Asignar/Desasignar platos</h1>'
+      '<h1 class="display-5">Asignar/Desasignar platos de un menú</h1>'
     );
 
     const form = document.createElement("form");
@@ -1605,7 +1672,7 @@ class RestaurantView {
     }
 
     container.append(form);
-    this.dishes.append(container);
+    this.main.append(container);
   }
 
   showAssignDishesSelects(productsInMenu, productsOutsideMenu) {
@@ -1649,9 +1716,9 @@ class RestaurantView {
 			</div>
     `
     );
-    const adDishes = form.querySelector("#assDish");
+    const assDish = form.querySelector("#assDish");
     for (const dish of productsOutsideMenu) {
-      adDishes.insertAdjacentHTML(
+      assDish.insertAdjacentHTML(
         "beforeend",
         `<option value="${dish.name}">${dish.name}</option>`
       );
