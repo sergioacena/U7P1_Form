@@ -548,7 +548,7 @@ const RestaurantsManager = (function () {
         return this;
       }
 
-      //Desasignar una categoría de un plato
+      // Desasignar una categoría de un plato
       deassignCategoryToDish(dish, ...categories) {
         if (!(dish instanceof Dish) || dish == null) throw new NullException(); //Si el plato es null salta excepción
 
@@ -561,20 +561,16 @@ const RestaurantsManager = (function () {
           if (!(category instanceof Category) || category == null)
             throw new NullException(); //Si la categoría es null salta excepción
 
-          let positionC = this.#getCategoryPosition(category);
-          if (positionC === -1) {
-            throw new NotRegisteredElementException(); //Si no existe la categoría, salta excepción
+          // Encuentra la posición de la categoría en el plato específico
+          let categoryIndexInDish = this.#dishes[
+            positionD
+          ].categories.findIndex((c) => c.name === category.name);
+          if (categoryIndexInDish === -1) {
+            throw new NotRegisteredElementException(); //Si la categoría no está registrada en el plato, salta excepción
           }
 
-          console.log(
-            "Desasignando categoría en la posición:",
-            positionC,
-            "del plato en posición:",
-            positionD
-          );
-
-          //Se asigna la categoría al plato según su posición
-          this.#dishes[positionD].categories.splice(positionC, 1);
+          // Se desasigna la categoría del plato
+          this.#dishes[positionD].categories.splice(categoryIndexInDish, 1);
         }
 
         return this;
@@ -668,13 +664,16 @@ const RestaurantsManager = (function () {
           if (!(dish instanceof Dish) || dish == null)
             throw new NullException(); //Si el plato es null salta excepción
 
-          let positionD = this.#getDishPosition(dish);
-          if (positionD === -1) {
-            throw new NotRegisteredElementException(); //Si no existe el plato, salta excepción
+          // Encuentra la posición del plato en el menú específico
+          let dishIndexInMenu = this.#menus[positionM].dishes.findIndex(
+            (d) => d.dish.name === dish.name
+          );
+          if (dishIndexInMenu === -1) {
+            throw new NotRegisteredElementException(); //Si el plato no está registrado en el menú, salta excepción
           }
 
-          //Se desasigna el plato del menú
-          this.#menus[positionM].dishes.splice(positionD, 1);
+          // Se desasigna el plato del menú
+          this.#menus[positionM].dishes.splice(dishIndexInMenu, 1);
         }
 
         return this;
