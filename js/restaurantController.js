@@ -438,6 +438,20 @@ class RestaurantController {
       error = exception;
     }
     this[VIEW].showRemoveDishModal(done, product, error);
+    if (done) {
+      this.refreshCurrentDishList();
+    }
+  };
+
+  //usado para actualizar la vista correctamente en cuanto hemos eliminado ya uno o más platos.
+  refreshCurrentDishList = () => {
+    const currentCategory = document.querySelector("#remDishCat").value;
+    const category = this[MODEL].createCategory(currentCategory);
+    const dishes = this[MODEL].getDishesInCategory(category);
+
+    const dishesArray = [...dishes];
+    this[VIEW].showRemoveDishList(dishesArray);
+    this[VIEW].bindRemoveDish(this.handleRemoveDish);
   };
 
   handleRemoveDishListByCategory = (category) => {

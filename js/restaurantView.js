@@ -1001,7 +1001,7 @@ class RestaurantView {
     if (done) {
       body.insertAdjacentHTML(
         "afterbegin",
-        `<div class="p-3">El producto <strong>${product.name}</strong> ha sido eliminado correctamente.</div>`
+        `<div class="p-3">El plato <strong>${product.name}</strong> ha sido eliminado correctamente.</div>`
       );
     } else {
       body.insertAdjacentHTML(
